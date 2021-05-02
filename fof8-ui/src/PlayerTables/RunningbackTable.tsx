@@ -95,7 +95,39 @@ const columns: Array<IColumn> = [
         minWidth: columnMinWidth,
         maxWidth: columnMinWidth,
         ariaLabel: 'High Power Inside'
-    }
+    },
+    {
+        key: 'lowThirdDownRunning',
+        name: 'LTDR',
+        fieldName: 'lowThirdDownRuns',
+        minWidth: columnMinWidth,
+        maxWidth: columnMinWidth,
+        ariaLabel: 'Low Third Down Running'
+    },
+    {
+        key: 'highThirdDownRunning',
+        name: 'HTDR',
+        fieldName: 'highThirdDownRuns',
+        minWidth: columnMinWidth,
+        maxWidth: columnMinWidth,
+        ariaLabel: 'High Third Down Running'
+    },
+    {
+        key: 'lowHoleRecognition',
+        name: 'LHR',
+        fieldName: 'lowHoleRecognition',
+        minWidth: columnMinWidth,
+        maxWidth: columnMinWidth,
+        ariaLabel: 'Low Hole Recognition'
+    },
+    {
+        key: 'highHoleRecognition',
+        name: 'HHR',
+        fieldName: 'highHoleRecognition',
+        minWidth: columnMinWidth,
+        maxWidth: columnMinWidth,
+        ariaLabel: 'High Hole Recognition'
+    },
     {
         key: 'lowEndurance',
         name: 'LE',
