@@ -17,19 +17,18 @@ const columns: Array<IColumn> = [
             let value = 0;
             if (item) {
                 value = 
-                    item.lowSpeed 
+                    item.lowRunBlocking
+                    + item.lowPassBlocking
+                    + item.lowBlockingStrength 
                     + item.lowPowerInside 
                     + item.lowThirdDownRuns 
-                    + item.lowHoleRecognition 
-                    + item.lowElusiveness 
-                    + item.lowSpeedOutside 
+                    + item.lowHoleRecognition
                     + item.lowBlitzPickup 
                     + item.lowAvoidDrops 
-                    + item.lowGetDownfield 
                     + item.lowRouteRunning 
                     + item.lowThirdDownReceiving 
                     + item.lowEndurance;
-                value /= 12;
+                value /= 11;
             }
             return (<div>{value.toFixed(1)}</div>)
         },
@@ -45,40 +44,29 @@ const columns: Array<IColumn> = [
             let value = 0;
             if (item) {
                 value = 
-                    item.highSpeed 
+                    item.highRunBlocking
+                    + item.highPassBlocking
+                    + item.highBlockingStrength 
                     + item.highPowerInside 
                     + item.highThirdDownRuns 
-                    + item.highHoleRecognition 
-                    + item.highElusiveness 
-                    + item.highSpeedOutside 
+                    + item.highHoleRecognition
                     + item.highBlitzPickup 
                     + item.highAvoidDrops 
-                    + item.highGetDownfield 
                     + item.highRouteRunning 
                     + item.highThirdDownReceiving 
                     + item.highEndurance;
-                value /= 12;
+                value /= 11;
             }
             return (<div>{value.toFixed(1)}</div>)
         },
         ariaLabel: "Average High Rating"
     },
-    {
-        key: 'lowSpeed',
-        name: 'LS',
-        fieldName: 'lowSpeed',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'Low Speed'
-    },
-    {
-        key: 'highSpeed',
-        name: 'HS',
-        fieldName: 'highSpeed',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'High Speed'
-    },
+    PlayerAttributeColumn.lowRunBlockingCol(columnMinWidth),
+    PlayerAttributeColumn.highRunBlockingCol(columnMinWidth),
+    PlayerAttributeColumn.lowPassBlockingCol(columnMinWidth),
+    PlayerAttributeColumn.highPassBlockingCol(columnMinWidth),
+    PlayerAttributeColumn.lowBlockStrengthCol(columnMinWidth),
+    PlayerAttributeColumn.highBlockStrengthCol(columnMinWidth),
     {
         key: 'lowPowerInside',
         name: 'LPI',
@@ -128,38 +116,6 @@ const columns: Array<IColumn> = [
         ariaLabel: 'High Hole Recognition'
     },
     {
-        key: 'lowElusiveness',
-        name: 'LEl',
-        fieldName: 'lowElusiveness',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'Low Elusiveness'
-    },
-    {
-        key: 'highElusiveness',
-        name: 'HEl',
-        fieldName: 'highElusiveness',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'High Elusiveness'
-    },
-    {
-        key: 'lowSpeedOutside',
-        name: 'LSO',
-        fieldName: 'lowSpeedOutside',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'Low Speed Outside'
-    },
-    {
-        key: 'highSpeedOutside',
-        name: 'HSO',
-        fieldName: 'highSpeedOutside',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        ariaLabel: 'High Speed Outside'
-    },
-    {
         key: 'lowBlitzPickup',
         name: 'LBP',
         fieldName: 'lowBlitzPickup',
@@ -177,8 +133,6 @@ const columns: Array<IColumn> = [
     },
     PlayerAttributeColumn.lowAvoidDropsCol(columnMinWidth),
     PlayerAttributeColumn.highAvoidDropsCol(columnMinWidth),
-    PlayerAttributeColumn.lowGetDownFieldCol(columnMinWidth),
-    PlayerAttributeColumn.highGetDownField(columnMinWidth),
     PlayerAttributeColumn.lowRouteRunningCol(columnMinWidth),
     PlayerAttributeColumn.highRouteRunningCol(columnMinWidth),
     PlayerAttributeColumn.lowThirdDownReceivingCol(columnMinWidth),
@@ -187,51 +141,48 @@ const columns: Array<IColumn> = [
     PlayerAttributeColumn.highEnduranceCol(columnMinWidth)
 ];
 
-export interface IRunningbackTableProps {
+export interface IFullbackTableProps {
     players: Array<IPlayer>;
 }
 
-export function RunningbackTable(props: IRunningbackTableProps) {
+export function FullbackTable(props: IFullbackTableProps) {
     const [checkLowValue, setCheckLowValue] = useState(true);
-    const [speedValue, setSpeedValue] = useState("");
+    const [runBlockingValue, setRunBlockingValue] = useState("");
+    const [passBlockingValue, setPassBlockingValue] = useState("");
+    const [blockingStrengthValue, setBlockingStrengthValue] = useState("");
     const [powerInsideValue, setPowerInsideValue] = useState("");
     const [thirdDownRunsValue, setThirdDownRunsValue] = useState("");
     const [holeRecognitionValue, setHoleRecognitionValue] = useState("");
-    const [elusivenessValue, setElusivenessValue] = useState("");
-    const [speedOutsideValue, setSpeedOutsideValue] = useState("");
     const [blitzPickupValue, setBlitzPickupValue] = useState("");
     const [avoidDropsValue, setAvoidDropsValue] = useState("");
-    const [getDownfieldValue, setGetDownfieldValue] = useState("");
     const [routeRunningValue, setRouteRunningValue] = useState("");
     const [thirdDownReceivingValue, setThirdDownReceivingValue] = useState("");
     const [enduranceValue, setEnduranceValue] = useState("");
 
     const filter = (player: IPlayer) => {
-        return player.positionGroup === "RB"
-            && (checkLowValue ? player.lowSpeed >= (Number(speedValue)) : player.highSpeed >= (Number(speedValue)))
+        return player.positionGroup === "FB"
+            && (checkLowValue ? player.lowRunBlocking >= (Number(runBlockingValue)) : player.highRunBlocking >= (Number(runBlockingValue)))
+            && (checkLowValue ? player.lowPassBlocking >= (Number(passBlockingValue)) : player.highPassBlocking >= (Number(passBlockingValue)))
+            && (checkLowValue ? player.lowBlockingStrength >= (Number(blockingStrengthValue)) : player.highPassBlocking >= (Number(blockingStrengthValue)))
             && (checkLowValue ? player.lowPowerInside >= (Number(powerInsideValue)) : player.highPowerInside >= (Number(powerInsideValue)))
             && (checkLowValue ? player.lowThirdDownRuns >= (Number(thirdDownRunsValue)) : player.highThirdDownRuns >= (Number(thirdDownRunsValue)))
-            && (checkLowValue ? player.lowHoleRecognition >= (Number(holeRecognitionValue)) : player.highHoleRecognition >= (Number(holeRecognitionValue)))
-            && (checkLowValue ? player.lowElusiveness >= (Number(elusivenessValue)) : player.highElusiveness >= (Number(elusivenessValue)))
-            && (checkLowValue ? player.lowSpeedOutside >= (Number(speedOutsideValue)) : player.highSpeedOutside >= (Number(speedOutsideValue)))
+            && (checkLowValue ? player.lowHoleRecognition >= (Number(holeRecognitionValue)) : player.lowHoleRecognition >= (Number(holeRecognitionValue)))
             && (checkLowValue ? player.lowBlitzPickup >= (Number(blitzPickupValue)) : player.highBlitzPickup >= (Number(blitzPickupValue)))
             && (checkLowValue ? player.lowAvoidDrops >= (Number(avoidDropsValue)) : player.highAvoidDrops >= (Number(avoidDropsValue)))
-            && (checkLowValue ? player.lowGetDownfield >= (Number(getDownfieldValue)) : player.highGetDownfield >= (Number(getDownfieldValue)))
             && (checkLowValue ? player.lowRouteRunning >= (Number(routeRunningValue)) : player.highRouteRunning >= (Number(routeRunningValue)))
             && (checkLowValue ? player.lowThirdDownReceiving >= (Number(thirdDownReceivingValue)) : player.highThirdDownReceiving >= (Number(thirdDownReceivingValue)))
             && (checkLowValue ? player.lowEndurance >= (Number(enduranceValue)) : player.highEndurance >= (Number(enduranceValue)));
     };
 
     const onClearFiltersClick = () => {
-        setSpeedValue("");
+        setRunBlockingValue("");
+        setPassBlockingValue("");
+        setBlockingStrengthValue("");
         setPowerInsideValue("");
         setThirdDownRunsValue("");
         setHoleRecognitionValue("");
-        setElusivenessValue("");
-        setSpeedOutsideValue("");
         setBlitzPickupValue("");
         setAvoidDropsValue("");
-        setGetDownfieldValue("");
         setRouteRunningValue("");
         setThirdDownReceivingValue("");
         setEnduranceValue("");
@@ -239,9 +190,19 @@ export function RunningbackTable(props: IRunningbackTableProps) {
 
     const playerAttributeFilterOptions: Array<IPlayerAttributeTextFieldProps> = [
         {
-            label: "Speed",
-            value: speedValue,
-            setOnChange: setSpeedValue
+            label: "Run Blocking",
+            value: runBlockingValue,
+            setOnChange: setRunBlockingValue
+        },
+        {
+            label: "Pass Blocking",
+            value: passBlockingValue,
+            setOnChange: setPassBlockingValue
+        },
+        {
+            label: "Blocking Strength",
+            value: blockingStrengthValue,
+            setOnChange: setBlockingStrengthValue
         },
         {
             label: "Power Inside",
@@ -259,16 +220,6 @@ export function RunningbackTable(props: IRunningbackTableProps) {
             setOnChange: setHoleRecognitionValue
         },
         {
-            label: "Elusiveness",
-            value: elusivenessValue,
-            setOnChange: setElusivenessValue
-        },
-        {
-            label: "Speed Outside",
-            value: speedOutsideValue,
-            setOnChange: setSpeedOutsideValue
-        },
-        {
             label: "Blitz Pickup",
             value: blitzPickupValue,
             setOnChange: setBlitzPickupValue
@@ -277,11 +228,6 @@ export function RunningbackTable(props: IRunningbackTableProps) {
             label: "Avoid Drops",
             value: avoidDropsValue,
             setOnChange: setAvoidDropsValue
-        },
-        {
-            label: "Get Downfield",
-            value: getDownfieldValue,
-            setOnChange: setGetDownfieldValue
         },
         {
             label: "Route Running",
