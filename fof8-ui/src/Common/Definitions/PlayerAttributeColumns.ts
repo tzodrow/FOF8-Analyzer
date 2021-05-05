@@ -93,6 +93,29 @@ export class PlayerAttributeColumn {
         };
     }
 
+    // Bump and Run Defense Columns
+    static lowBumpandRunDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowBumpandRunDefense',
+            name: 'LBaRD',
+            fieldName: 'lowBumpandRunDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Bump and Run Defense'
+        };
+    }
+
+    static highBumpandRunDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highBumpandRunDefense',
+            name: 'HBaRD',
+            fieldName: 'highBumpandRunDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Bump and Run Defense'
+        };
+    }
+
     // Courage Columns
     static lowCourageCol = (columnWidth: number): IColumn => {
         return {
@@ -208,6 +231,29 @@ export class PlayerAttributeColumn {
         }
     }
 
+    // Intercepting Columns
+    static lowInterceptingCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowIntercepting',
+            name: 'LI',
+            fieldName: 'lowIntercepting',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Intercepting'
+        };
+    }
+
+    static highInterceptingCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highIntercepting',
+            name: 'HI',
+            fieldName: 'highIntercepting',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Intercepting'
+        };
+    }
+
     // Kicking Power Columns
     static lowKickingPowerCol = (columnWidth: number): IColumn => {
         return {
@@ -231,6 +277,29 @@ export class PlayerAttributeColumn {
         };
     }
 
+    // Man to Man Defense Columns
+    static lowMantoManDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowMantoManDefense',
+            name: 'LMtMD',
+            fieldName: 'lowMantoManDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Man to Man Defense'
+        };
+    }
+
+    static highMantoManDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highMantoManDefense',
+            name: 'HMtMD',
+            fieldName: 'highMantoManDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Man to Man Defense'
+        };
+    }
+
     // Pass Blocking Columns
     static lowPassBlockingCol = (columnWidth: number): IColumn => {
         return {
@@ -251,6 +320,98 @@ export class PlayerAttributeColumn {
             minWidth: columnWidth,
             maxWidth: columnWidth,
             ariaLabel: 'High Pass Blocking'
+        };
+    }
+
+    // Pass Rush Strength Columns
+    static lowPassRushStrengthCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowPassRushStrength',
+            name: 'LPRS',
+            fieldName: 'lowPassRushStrength',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Pass Rush Strength'
+        };
+    }
+
+    static highPassRushStrengthCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highPassRushStrength',
+            name: 'HPRS',
+            fieldName: 'highPassRushStrength',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Pass Rush Strength'
+        };
+    }
+
+    // Pass Rush Technique Columns
+    static lowPassRushTechniqueCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowPassRushTechnique',
+            name: 'LPRT',
+            fieldName: 'lowPassRushTechnique',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Pass Rush Technique'
+        };
+    }
+
+    static highPassRushTechniqueCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highPassRushTechnique',
+            name: 'HPRT',
+            fieldName: 'highPassRushTechnique',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Pass Rush Technique'
+        };
+    }
+
+    // Play Diagnosis Columns
+    static lowPlayDiagnosisCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowPlayDiagnosis',
+            name: 'LPD',
+            fieldName: 'lowPlayDiagnosis',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Play Diagnosis'
+        };
+    }
+
+    static highPlayDiagnosisCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highPlayDiagnosis',
+            name: 'HPD',
+            fieldName: 'highPlayDiagnosis',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Play Diagnosis'
+        };
+    }
+
+    // Punishing Hitter Columns
+    static lowPunishingHitterCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowPunishingHitter',
+            name: 'LPH',
+            fieldName: 'lowPunishingHitter',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Punishing Hitter'
+        };
+    }
+
+    static highPunishingHitterCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highPunishingHitter',
+            name: 'HPH',
+            fieldName: 'highPunishingHitter',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Punishing Hitter'
         };
     }
 
@@ -300,6 +461,29 @@ export class PlayerAttributeColumn {
         };
     }
 
+    // Run Defense Columns
+    static lowRunDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowRunDefense',
+            name: 'LRD',
+            fieldName: 'lowRunDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Run Defense'
+        };
+    }
+
+    static highRunDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highRunDefense',
+            name: 'HRD',
+            fieldName: 'highRunDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Run Defense'
+        };
+    }
+
     // Third Down Receiving Columns
     static lowThirdDownReceivingCol = (columnWidth: number): IColumn => {
         return {
@@ -320,6 +504,29 @@ export class PlayerAttributeColumn {
             minWidth: columnWidth,
             maxWidth: columnWidth,
             ariaLabel: 'High Third Down Receiving'
+        };
+    }
+
+    // Zone Defense Columns
+    static lowZoneDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowZoneDefense',
+            name: 'LZD',
+            fieldName: 'lowZoneDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Zone Defense'
+        };
+    }
+
+    static highZoneDefenseCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highZoneDefense',
+            name: 'HZD',
+            fieldName: 'highZoneDefense',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Zone Defense'
         };
     }
 }

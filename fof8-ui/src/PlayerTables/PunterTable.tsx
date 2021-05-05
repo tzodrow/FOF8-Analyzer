@@ -49,56 +49,49 @@ const columns: Array<IColumn> = [
     PlayerAttributeColumn.highKickingPowerCol(columnMinWidth),
     PlayerAttributeColumn.lowHangTimeCol(columnMinWidth),
     PlayerAttributeColumn.highHangTimeCol(columnMinWidth),
+    PlayerAttributeColumn.lowDirectionalPunting(columnMinWidth),
+    PlayerAttributeColumn.highDirectionalPunting(columnMinWidth)
 ];
 
-export interface IOffensiveLineTableProps {
+export interface IPunterTableProps {
     players: Array<IPlayer>;
-    playerPositionGroup: string;
 }
 
-export function OffensiveLineTable(props: IOffensiveLineTableProps) {
+export function PunterTable(props: IPunterTableProps) {
     const [checkLowValue, setCheckLowValue] = useState(true);
-    const [runBlockingValue, setRunBlockingValue] = useState("");
-    const [passBlockingValue, setPassBlockingValue] = useState("");
-    const [blockingStrengthValue, setBlockingStrengthValue] = useState("");
-    const [enduranceValue, setEnduranceValue] = useState("");
+    const [kickingPowerValue, setKickingPowerValue] = useState("");
+    const [hangTimeValue, setHangTimeValue] = useState("");
+    const [directionalPuntingValue, setDirectionalPuntingValue] = useState("");
 
     const filter = (player: IPlayer) => {
-        return player.positionGroup === props.playerPositionGroup
-            && (checkLowValue ? player.lowRunBlocking >= (Number(runBlockingValue)) : player.highRunBlocking >= (Number(runBlockingValue)))
-            && (checkLowValue ? player.lowPassBlocking >= (Number(passBlockingValue)) : player.highPassBlocking >= (Number(passBlockingValue)))
-            && (checkLowValue ? player.lowBlockingStrength >= (Number(blockingStrengthValue)) : player.highPassBlocking >= (Number(blockingStrengthValue)))
-            && (checkLowValue ? player.lowEndurance >= (Number(enduranceValue)) : player.highEndurance >= (Number(enduranceValue)));
+        return player.positionGroup === "P"
+            && (checkLowValue ? player.lowKickingPower >= (Number(kickingPowerValue)) : player.highKickingPower >= (Number(kickingPowerValue)))
+            && (checkLowValue ? player.lowHangTime >= (Number(hangTimeValue)) : player.highHangTime >= (Number(hangTimeValue)))
+            && (checkLowValue ? player.lowDirectionalPunting >= (Number(directionalPuntingValue)) : player.highDirectionalPunting >= (Number(directionalPuntingValue)));
     };
 
     const onClearFiltersClick = () => {
-        setRunBlockingValue("");
-        setPassBlockingValue("");
-        setBlockingStrengthValue("");
-        setEnduranceValue("");
+        setKickingPowerValue("");
+        setHangTimeValue("");
+        setDirectionalPuntingValue("");
     }
 
     const playerAttributeFilterOptions: Array<IPlayerAttributeTextFieldProps> = [
         {
-            label: "Run Blocking",
-            value: runBlockingValue,
-            setOnChange: setRunBlockingValue
+            label: "Kicking Power",
+            value: kickingPowerValue,
+            setOnChange: setKickingPowerValue
         },
         {
-            label: "Pass Blocking",
-            value: passBlockingValue,
-            setOnChange: setPassBlockingValue
+            label: "Hang Time",
+            value: hangTimeValue,
+            setOnChange: setHangTimeValue
         },
         {
-            label: "Blocking Strength",
-            value: blockingStrengthValue,
-            setOnChange: setBlockingStrengthValue
-        },
-        {
-            label: "Endurance",
-            value: enduranceValue,
-            setOnChange: setEnduranceValue
-        },
+            label: "Directional Punting",
+            value: directionalPuntingValue,
+            setOnChange: setDirectionalPuntingValue
+        }
     ];
 
     return (
