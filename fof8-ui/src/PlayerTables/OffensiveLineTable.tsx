@@ -116,6 +116,9 @@ export function OffensiveLineTable(props: IOffensiveLineTableProps) {
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={[]}
+            selectedAttributes={[]}
+            setAttributes={() => console.log("Called")}
         />
     );
 }

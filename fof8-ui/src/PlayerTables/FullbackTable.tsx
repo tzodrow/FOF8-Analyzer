@@ -255,6 +255,9 @@ export function FullbackTable(props: IFullbackTableProps) {
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={[]}
+            selectedAttributes={[]}
+            setAttributes={() => console.log("Called")}
         />
     );
 }

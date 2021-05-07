@@ -1,6 +1,7 @@
-import { Checkbox, ConstrainMode, DetailsList, IColumn, IDetailsColumnRenderTooltipProps, IDetailsHeaderProps, IRenderFunction, mergeStyleSets, Panel, PrimaryButton, ScrollablePane, ScrollbarVisibility, Stack, Sticky, StickyPositionType, TooltipHost } from '@fluentui/react';
+import { Checkbox, ConstrainMode, DetailsList, Dropdown, IColumn, IDetailsColumnRenderTooltipProps, IDetailsHeaderProps, IDropdownOption, IRenderFunction, mergeStyleSets, Panel, PrimaryButton, ScrollablePane, ScrollbarVisibility, Stack, Sticky, StickyPositionType, TooltipHost } from '@fluentui/react';
 import { useState } from 'react';
 import { IPlayerAttributeTextFieldProps, PlayerAttributeTextField } from '../Common/Components/PlayerAttributeTextField';
+import { Attribute } from '../Enums/Attributes';
 import { IPlayer } from '../Models/IPlayer';
 
 const columnMinWidth = 45;
@@ -35,6 +36,10 @@ const classNames = mergeStyleSets({
     wrapper: {
         height: '80vh',
         position: 'relative',
+        backgroundColot: 'white'
+    },
+    filter: {
+        backgroundColor: 'white'
     }
 });
 
@@ -46,6 +51,9 @@ export interface IBasePlayerTableProps {
     onPlayerFilter: (value: IPlayer) => boolean;
     onClearFiltersClick: () => void;
     setCheckLowValue: (newVal: boolean) => void;
+    attributes: Array<Attribute>;
+    selectedAttributes: Array<Attribute>;
+    setAttributes: (attributes: Array<Attribute>) => void;
 }
 
 const onRenderDetailsHeader: IRenderFunction<IDetailsHeaderProps> = (props, defaultRender) => {
@@ -71,11 +79,41 @@ export function BasePlayerTable(props: IBasePlayerTableProps) {
     let players = props.players.filter(props.onPlayerFilter);
     players.sort((a, b) => b.grade - a.grade);
 
+    let options = props.attributes.map(attr => {
+        return {
+            key: attr,
+            text: attr
+        };
+    });
+
+    const onAttributeChange = (option?: IDropdownOption) => {
+        if (option) {
+            let updatedAttributes = [...props.selectedAttributes];
+            let optionAttribute = option.key as Attribute;
+            if (option.selected) {
+                updatedAttributes.push(optionAttribute);
+            } else {
+                let removeIndex = updatedAttributes.findIndex(attr => attr === optionAttribute);
+                updatedAttributes.splice(removeIndex, 1);
+            }
+            props.setAttributes(updatedAttributes);
+        }
+    }
+
     return (
         <div className={classNames.wrapper}>
             <ScrollablePane scrollbarVisibility={ScrollbarVisibility.auto}>
                 <Sticky stickyPosition={StickyPositionType.Header} isScrollSynced>
-                    <PrimaryButton text={"Filters"} onClick={() => setIsPanelOpen(true)} />
+                    <Stack horizontal className={classNames.filter}>
+                        <PrimaryButton text={"Filters"} onClick={() => setIsPanelOpen(true)} />
+                        <Dropdown 
+                            multiSelect 
+                            selectedKeys={props.selectedAttributes} 
+                            options={options} 
+                            onChange={(_, option) => onAttributeChange(option)} 
+                            placeholder={"Attributes"} 
+                        />
+                    </Stack>
                 </Sticky>
                 <DetailsList
                     onRenderDetailsHeader={onRenderDetailsHeader}

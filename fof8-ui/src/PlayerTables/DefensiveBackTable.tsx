@@ -2,6 +2,8 @@ import { IColumn } from '@fluentui/react';
 import { useState } from 'react';
 import { IPlayerAttributeTextFieldProps } from '../Common/Components/PlayerAttributeTextField';
 import { PlayerAttributeColumn } from '../Common/Definitions/PlayerAttributeColumns';
+import { getAttributeValue } from '../Common/Functions/GetAttribute';
+import { Attribute } from '../Enums/Attributes';
 import { IPlayer } from '../Models/IPlayer';
 import { BasePlayerTable } from './BasePlayerTable';
 
@@ -73,6 +75,17 @@ const columns: Array<IColumn> = [
     PlayerAttributeColumn.highEnduranceCol(columnMinWidth)
 ];
 
+const defensiveBackAttributes = [
+    Attribute.BumpandRunDefense,
+    Attribute.Endurance,
+    Attribute.Intercepting,
+    Attribute.MantoManDefense,
+    Attribute.PlayDiagnosis,
+    Attribute.PunishingHitter,
+    Attribute.RunDefense,
+    Attribute.ZoneDefense
+]
+
 export interface IDefensiveBackTableProps {
     players: Array<IPlayer>;
     playerPositionGroup: string;
@@ -88,6 +101,7 @@ export function DefensiveBackTable(props: IDefensiveBackTableProps) {
     const [punishingHitterValue, setPunishingHitterValue] = useState("");
     const [interceptingValue, setInterceptingValue] = useState("");
     const [enduranceValue, setEnduranceValue] = useState("");
+    const [avgAttributes, setAvgAttributes] = useState(defensiveBackAttributes);
 
     const filter = (player: IPlayer) => {
         return player.positionGroup === props.playerPositionGroup
@@ -155,15 +169,38 @@ export function DefensiveBackTable(props: IDefensiveBackTableProps) {
         },
     ];
 
+    const avgCol: IColumn = {
+        key: 'avg',
+        name: 'Avg',
+        fieldName: 'avg',
+        minWidth: columnMinWidth,
+        maxWidth: columnMinWidth,
+        onRender: (item?: IPlayer) => {
+            let value = 0;
+            if (item && avgAttributes.length > 0) {
+                for (let i = 0; i < avgAttributes.length; i++) {
+                    value += (getAttributeValue(item, avgAttributes[i]) + getAttributeValue(item, avgAttributes[i], true)) / 2;
+                }
+                
+                value /= avgAttributes.length;
+            }
+            return (<div>{value.toFixed(1)}</div>)
+        },
+        ariaLabel: "Average"
+    }
+
     return (
         <BasePlayerTable 
             checkLowValue={checkLowValue}
             setCheckLowValue={setCheckLowValue}
-            positionColumns={columns}
+            positionColumns={[avgCol, ...columns]}
             players={props.players}
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={defensiveBackAttributes}
+            selectedAttributes={avgAttributes}
+            setAttributes={setAvgAttributes}
         />
     );
 }
