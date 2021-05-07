@@ -1,7 +1,7 @@
 import { Attribute } from "../../Enums/Attributes";
 import { IPlayer } from "../../Models/IPlayer";
 
-export function getAttributeValue (player: IPlayer, attribute: Attribute, isLow = true) {
+export function getAttributeValue (player: IPlayer, attribute: Attribute, isLow = false) {
     switch (attribute) {
         case Attribute.BumpandRunDefense:
             return isLow ? player.lowBumpandRunDefense : player.highBumpandRunDefense;
