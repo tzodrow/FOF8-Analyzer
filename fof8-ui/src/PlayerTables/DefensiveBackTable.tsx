@@ -2,61 +2,12 @@ import { IColumn } from '@fluentui/react';
 import { useState } from 'react';
 import { IPlayerAttributeTextFieldProps } from '../Common/Components/PlayerAttributeTextField';
 import { PlayerAttributeColumn } from '../Common/Definitions/PlayerAttributeColumns';
-import { getAttributeValue } from '../Common/Functions/GetAttribute';
 import { Attribute } from '../Enums/Attributes';
 import { IPlayer } from '../Models/IPlayer';
 import { BasePlayerTable } from './BasePlayerTable';
 
 const columnMinWidth = 45;
 const columns: Array<IColumn> = [
-    {
-        key: 'avgLow',
-        name: 'AvgL',
-        fieldName: 'avgLow',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        onRender: (item?: IPlayer) => {
-            let value = 0;
-            if (item) {
-                value = 
-                    item.lowRunDefense
-                    + item.lowMantoManDefense
-                    + item.lowZoneDefense
-                    + item.lowBumpandRunDefense
-                    + item.lowPlayDiagnosis
-                    + item.lowPunishingHitter
-                    + item.lowIntercepting
-                    + item.lowEndurance;
-                value /= 8;
-            }
-            return (<div>{value.toFixed(1)}</div>)
-        },
-        ariaLabel: "Average Low Rating"
-    },
-    {
-        key: 'avgHigh',
-        name: 'AvgH',
-        fieldName: 'avgHigh',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        onRender: (item?: IPlayer) => {
-            let value = 0;
-            if (item) {
-                value = 
-                    item.highRunDefense
-                    + item.highMantoManDefense
-                    + item.highZoneDefense
-                    + item.highBumpandRunDefense
-                    + item.highPlayDiagnosis
-                    + item.highPunishingHitter
-                    + item.highIntercepting
-                    + item.highEndurance;
-                value /= 8;
-            }
-            return (<div>{value.toFixed(1)}</div>)
-        },
-        ariaLabel: "Average High Rating"
-    },
     PlayerAttributeColumn.lowRunDefenseCol(columnMinWidth),
     PlayerAttributeColumn.highRunDefenseCol(columnMinWidth),
     PlayerAttributeColumn.lowMantoManDefenseCol(columnMinWidth),
@@ -169,31 +120,11 @@ export function DefensiveBackTable(props: IDefensiveBackTableProps) {
         },
     ];
 
-    const avgCol: IColumn = {
-        key: 'avg',
-        name: 'Avg',
-        fieldName: 'avg',
-        minWidth: columnMinWidth,
-        maxWidth: columnMinWidth,
-        onRender: (item?: IPlayer) => {
-            let value = 0;
-            if (item && avgAttributes.length > 0) {
-                for (let i = 0; i < avgAttributes.length; i++) {
-                    value += (getAttributeValue(item, avgAttributes[i]) + getAttributeValue(item, avgAttributes[i], true)) / 2;
-                }
-                
-                value /= avgAttributes.length;
-            }
-            return (<div>{value.toFixed(1)}</div>)
-        },
-        ariaLabel: "Average"
-    }
-
     return (
-        <BasePlayerTable 
+        <BasePlayerTable
             checkLowValue={checkLowValue}
             setCheckLowValue={setCheckLowValue}
-            positionColumns={[avgCol, ...columns]}
+            positionColumns={columns}
             players={props.players}
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
