@@ -218,7 +218,7 @@ export function QuarterbackTable(props: IQuarterbackTableProps) {
     const [senseRushValue, setSenseRushValue] = useState("");
 
     const quarterbackFilter = (player: IPlayer) => {
-        return player.position === "QB"
+        return player.positionGroup === "QB"
             && (checkLowValue ? player.lowScreenPasses >= (Number(screenPassValue)) : player.highScreenPasses >= (Number(screenPassValue)))
             && (checkLowValue ? player.lowShortPasses >= (Number(shortPassValue)) : player.highShortPasses >= (Number(shortPassValue)))
             && (checkLowValue ? player.lowMediumPasses >= (Number(mediumPassValue)) : player.highMediumPasses >= (Number(mediumPassValue)))
