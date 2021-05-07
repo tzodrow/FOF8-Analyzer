@@ -254,6 +254,29 @@ export class PlayerAttributeColumn {
         };
     }
 
+    // Kicking Accuracy Columns
+    static lowKickingAccuracyCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowKickingAccuracy',
+            name: 'LKA',
+            fieldName: 'lowKickingAccuracy',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Kicking Accuracy'
+        };
+    }
+
+    static highKickingAccuracyCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highKickingAccuracy',
+            name: 'HKA',
+            fieldName: 'highKickingAccuracy',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Kicking Accuracy'
+        };
+    }
+
     // Kicking Power Columns
     static lowKickingPowerCol = (columnWidth: number): IColumn => {
         return {
@@ -274,6 +297,52 @@ export class PlayerAttributeColumn {
             minWidth: columnWidth,
             maxWidth: columnWidth,
             ariaLabel: 'High Kicking Power'
+        };
+    }
+
+    // Kickoff Distance Columns
+    static lowKickoffDistanceCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowKickoffDistance',
+            name: 'LKD',
+            fieldName: 'lowKickoffDistance',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Kickoff Distance'
+        };
+    }
+
+    static highKickoffDistanceCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highKickoffDistance',
+            name: 'HKD',
+            fieldName: 'highKickoffDistance',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Kickoff Distance'
+        };
+    }
+
+    // Kickoff Hang Time Columns
+    static lowKickoffHangTimeCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowKickoffHangTime',
+            name: 'LKHT',
+            fieldName: 'lowKickoffHangTime',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Kickoff Hang Time'
+        };
+    }
+
+    static highKickoffHangTimeCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highKickoffHangTime',
+            name: 'HKHT',
+            fieldName: 'highKickoffHangTime',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Kickoff Hang Time'
         };
     }
 
@@ -412,6 +481,29 @@ export class PlayerAttributeColumn {
             minWidth: columnWidth,
             maxWidth: columnWidth,
             ariaLabel: 'High Punishing Hitter'
+        };
+    }
+
+    // Punting Power Columns
+    static lowPuntingPowerCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'lowPuntingPower',
+            name: 'LPP',
+            fieldName: 'lowPuntingPower',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'Low Punting Power'
+        };
+    }
+
+    static highPuntingPowerCol = (columnWidth: number): IColumn => {
+        return {
+            key: 'highPuntingPower',
+            name: 'HPP',
+            fieldName: 'highPuntingPower',
+            minWidth: columnWidth,
+            maxWidth: columnWidth,
+            ariaLabel: 'High Punting Power'
         };
     }
 

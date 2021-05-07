@@ -17,7 +17,7 @@ const columns: Array<IColumn> = [
             let value = 0;
             if (item) {
                 value = 
-                    item.lowKickingPower
+                    item.lowPuntingPower
                     + item.lowHangTime
                     + item.lowDirectionalPunting;
                 value /= 3;
@@ -36,7 +36,7 @@ const columns: Array<IColumn> = [
             let value = 0;
             if (item) {
                 value = 
-                    item.highKickingPower
+                    item.highPuntingPower
                     + item.highHangTime
                     + item.highDirectionalPunting;
                 value /= 3;
@@ -45,8 +45,8 @@ const columns: Array<IColumn> = [
         },
         ariaLabel: "Average High Rating"
     },
-    PlayerAttributeColumn.lowKickingPowerCol(columnMinWidth),
-    PlayerAttributeColumn.highKickingPowerCol(columnMinWidth),
+    PlayerAttributeColumn.lowPuntingPowerCol(columnMinWidth),
+    PlayerAttributeColumn.highPuntingPowerCol(columnMinWidth),
     PlayerAttributeColumn.lowHangTimeCol(columnMinWidth),
     PlayerAttributeColumn.highHangTimeCol(columnMinWidth),
     PlayerAttributeColumn.lowDirectionalPunting(columnMinWidth),
@@ -59,28 +59,28 @@ export interface IPunterTableProps {
 
 export function PunterTable(props: IPunterTableProps) {
     const [checkLowValue, setCheckLowValue] = useState(true);
-    const [kickingPowerValue, setKickingPowerValue] = useState("");
+    const [puntingPowerValue, setPuntingPowerValue] = useState("");
     const [hangTimeValue, setHangTimeValue] = useState("");
     const [directionalPuntingValue, setDirectionalPuntingValue] = useState("");
 
     const filter = (player: IPlayer) => {
         return player.positionGroup === "P"
-            && (checkLowValue ? player.lowKickingPower >= (Number(kickingPowerValue)) : player.highKickingPower >= (Number(kickingPowerValue)))
+            && (checkLowValue ? player.lowPuntingPower >= (Number(puntingPowerValue)) : player.highPuntingPower >= (Number(puntingPowerValue)))
             && (checkLowValue ? player.lowHangTime >= (Number(hangTimeValue)) : player.highHangTime >= (Number(hangTimeValue)))
             && (checkLowValue ? player.lowDirectionalPunting >= (Number(directionalPuntingValue)) : player.highDirectionalPunting >= (Number(directionalPuntingValue)));
     };
 
     const onClearFiltersClick = () => {
-        setKickingPowerValue("");
+        setPuntingPowerValue("");
         setHangTimeValue("");
         setDirectionalPuntingValue("");
     }
 
     const playerAttributeFilterOptions: Array<IPlayerAttributeTextFieldProps> = [
         {
-            label: "Kicking Power",
-            value: kickingPowerValue,
-            setOnChange: setKickingPowerValue
+            label: "Punting Power",
+            value: puntingPowerValue,
+            setOnChange: setPuntingPowerValue
         },
         {
             label: "Hang Time",

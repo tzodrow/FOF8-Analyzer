@@ -1,6 +1,10 @@
 import { Pivot, PivotItem } from "@fluentui/react";
+import { DefensiveBackTable } from "../PlayerTables/DefensiveBackTable";
+import { DefensiveFrontTable } from "../PlayerTables/DefensiveFrontTable";
 import { FullbackTable } from "../PlayerTables/FullbackTable";
+import { KickerTable } from "../PlayerTables/KickerTable";
 import { OffensiveLineTable } from "../PlayerTables/OffensiveLineTable";
+import { PunterTable } from "../PlayerTables/PunterTable";
 import { QuarterbackTable } from "../PlayerTables/QuarterbackTable";
 import { RunningbackTable } from "../PlayerTables/RunningbackTable";
 import { TightendTable } from "../PlayerTables/TightendPlayerTable";
@@ -72,6 +76,68 @@ export default function DraftPage(props: Props) {
                 <OffensiveLineTable
                     players={players}
                     playerPositionGroup={"T"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="K"
+            >
+                <KickerTable
+                    players={players}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="P"
+            >
+                <PunterTable
+                    players={players}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="DE"
+            >
+                <DefensiveFrontTable
+                    players={players}
+                    playerPositionGroup={"DE"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="DT"
+            >
+                <DefensiveFrontTable
+                    players={players}
+                    playerPositionGroup={"DT"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="ILB"
+            >
+                <DefensiveFrontTable
+                    players={players}
+                    playerPositionGroup={"ILB"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="OLB"
+            >
+                <DefensiveFrontTable
+                    players={players}
+                    playerPositionGroup={"OLB"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="CB"
+            >
+                <DefensiveBackTable
+                    players={players}
+                    playerPositionGroup={"CB"}
+                />
+            </PivotItem>
+            <PivotItem
+                headerText="S"
+            >
+                <DefensiveBackTable
+                    players={players}
+                    playerPositionGroup={"S"}
                 />
             </PivotItem>
         </Pivot>
