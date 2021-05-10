@@ -1,5 +1,6 @@
-import { Checkbox, ConstrainMode, DetailsList, Dropdown, IColumn, IDetailsColumnRenderTooltipProps, IDetailsHeaderProps, IDropdownOption, IRenderFunction, mergeStyleSets, Panel, PrimaryButton, ScrollablePane, ScrollbarVisibility, Stack, Sticky, StickyPositionType, TooltipHost } from '@fluentui/react';
+import { Checkbox, ConstrainMode, DetailsList, Dropdown, IColumn, IDetailsColumnRenderTooltipProps, IDetailsHeaderProps, IDropdownOption, IRenderFunction, mergeStyleSets, Panel, PrimaryButton, ScrollablePane, ScrollbarVisibility, SelectionMode, Stack, Sticky, StickyPositionType, TooltipHost } from '@fluentui/react';
 import { useState } from 'react';
+import { DraftBoardButton } from '../Common/Components/DraftBoardButton';
 import { IPlayerAttributeTextFieldProps, PlayerAttributeTextField } from '../Common/Components/PlayerAttributeTextField';
 import { getAttributeValue } from '../Common/Functions/GetAttribute';
 import { Attribute } from '../Enums/Attributes';
@@ -7,6 +8,16 @@ import { IPlayer } from '../Models/IPlayer';
 
 const columnMinWidth = 45;
 const columns: Array<IColumn> = [
+    {
+        key: 'draftBoardButton',
+        name: 'Draft Board',
+        minWidth: 100,
+        maxWidth: 100,
+        ariaLabel: 'Draft Board',
+        onRender: (item?: IPlayer) => {
+            return item ? <DraftBoardButton player={item} /> : <span />
+        }
+    },
     {
         key: 'firstName',
         name: 'First Name',
@@ -141,6 +152,7 @@ export function BasePlayerTable(props: IBasePlayerTableProps) {
                     items={players}
                     columns={[...columns, avgCol, ...props.positionColumns]}
                     constrainMode={ConstrainMode.unconstrained}
+                    selectionMode={SelectionMode.none}
                 />
             </ScrollablePane>
             <Panel

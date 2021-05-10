@@ -14,6 +14,7 @@ export interface IPlayer extends IQuarterbackPlayer, ISkillPositionPlayer, IDraf
     
     position: string;
     positionGroup: string;
+    "" : string;
 }
 
 export interface IQuarterbackPlayer {
