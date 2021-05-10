@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Link } from '@fluentui/react/lib/Link';
 import {
     DetailsList,
@@ -10,55 +9,30 @@ import {
     IDragDropContext,
 } from '@fluentui/react/lib/DetailsList';
 import { MarqueeSelection } from '@fluentui/react/lib/MarqueeSelection';
-import { TextField, ITextFieldStyles } from '@fluentui/react/lib/TextField';
-import { Toggle, IToggleStyles } from '@fluentui/react/lib/Toggle';
 import { getTheme, mergeStyles } from '@fluentui/react/lib/Styling';
 import { IPlayer } from '../Models/IPlayer';
 import { useAppSelector } from '../Reducers/Hooks';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { set } from '../Reducers/Slices/DraftSlice';
 
 const theme = getTheme();
-const margin = '0 30px 20px 0';
 const dragEnterClass = mergeStyles({
     backgroundColor: theme.palette.neutralLight,
 });
-const controlWrapperClass = mergeStyles({
-    display: 'flex',
-    flexWrap: 'wrap',
-});
-const textFieldStyles: Partial<ITextFieldStyles> = {
-    root: { margin: margin },
-    fieldGroup: { maxWidth: '100px' },
-};
-const togglesStyles: Partial<IToggleStyles> = { root: { margin } };
-
-export interface IDetailsListDragDropExampleState {
-    items: IPlayer[];
-    columns: IColumn[];
-    isColumnReorderEnabled: boolean;
-    frozenColumnCountFromStart: string;
-    frozenColumnCountFromEnd: string;
-}
 
 interface IDraftBoardPageProps {
 
 }
 
 export function DraftBoardPage(props: IDraftBoardPageProps) {
-    const items = useAppSelector(state => state.draft.players);
+    const players = useAppSelector(state => state.draft.players);
+    const dispatch = useDispatch();
 
-    const [players, setPlayers] = useState(items);
-    const [selection, setSelection] = useState(new Selection());
-    const [columns, setColumns] = useState(buildColumns(items, true));
-    const [isColumnReorderEnabled, setIsColumnReorderEnabled] = useState(true);
+    const [selection] = useState(new Selection());
+    const [columns, setColumns] = useState(buildColumns(players, true));
     const [draggedItem, setDraggedItem] = useState({} as IPlayer);
     const [draggedIndex, setDraggedItemIndex] = useState(-1);
-    const [frozenColumnCountFromStart, setFrozenColumnCountFromStart] = useState("-1");
-    const [frozenColumnCountFromEnd, setFrozenColumnCountFromEnd] = useState("0");
-
-    console.log(items);
-    console.log(players);
-    console.log(columns);
 
     const insertBeforeItem = (item: IPlayer): void => {
         const draggedItems: Array<IPlayer> = selection.isIndexSelected(draggedIndex)
@@ -66,11 +40,11 @@ export function DraftBoardPage(props: IDraftBoardPageProps) {
             : [draggedItem!];
 
         const insertIndex = players.indexOf(item);
-        const filteredItems = players.filter(itm => draggedItems.indexOf(itm) === -1);
+        const filteredItems = players.filter(p => !draggedItems.some(itm => itm.playerId === p.playerId));
 
         filteredItems.splice(insertIndex, 0, ...draggedItems);
 
-        setPlayers(filteredItems);
+        dispatch(set(filteredItems));
     }
 
     const getDragDropEvents = (): IDragDropEvents => {
@@ -93,8 +67,8 @@ export function DraftBoardPage(props: IDraftBoardPageProps) {
                     insertBeforeItem(item);
                 }
             },
-            onDragStart: (item?: any, itemIndex?: number, selectedItems?: any[], event?: MouseEvent) => {
-                setDraggedItem(item);
+            onDragStart: (item?: IPlayer, itemIndex?: number, selectedItems?: any[], event?: MouseEvent) => {
+                setDraggedItem(item ? item : {} as IPlayer);
                 setDraggedItemIndex(itemIndex ? itemIndex : -1);
             },
             onDragEnd: (item?: any, event?: DragEvent) => {
@@ -116,33 +90,11 @@ export function DraftBoardPage(props: IDraftBoardPageProps) {
 
     const getColumnReorderOptions = (): IColumnReorderOptions => {
         return {
-            frozenColumnCountFromStart: parseInt(frozenColumnCountFromStart, 10),
-            frozenColumnCountFromEnd: parseInt(frozenColumnCountFromEnd, 10),
+            frozenColumnCountFromStart: parseInt("-1", 10),
+            frozenColumnCountFromEnd: parseInt("0", 10),
             handleColumnReorder: handleColumnReorder,
         };
     }
-
-    const validateNumber = (value: string): string => {
-        return isNaN(Number(value)) ? `The value should be a number, actual is ${value}.` : '';
-    }
-
-    const onChangeStartCountText = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-        text?: string,
-    ): void => {
-        setFrozenColumnCountFromStart(text ? text : "");
-    };
-
-    const onChangeEndCountText = (
-        event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-        text?: string,
-    ): void => {
-        setFrozenColumnCountFromEnd(text ? text : "");
-    };
-
-    const onChangeColumnReorderEnabled = (ev: React.MouseEvent<HTMLElement>, checked?: boolean): void => {
-        setIsColumnReorderEnabled(checked ? true : false);
-    };
 
     const onItemInvoked = (item: IPlayer): void => {
         alert(`Item invoked: ${item.firstName}`);
@@ -159,41 +111,17 @@ export function DraftBoardPage(props: IDraftBoardPageProps) {
 
     return (
         <div>
-            <div className={controlWrapperClass}>
-                <Toggle
-                    label="Enable column reorder"
-                    checked={isColumnReorderEnabled}
-                    onChange={onChangeColumnReorderEnabled}
-                    onText="Enabled"
-                    offText="Disabled"
-                    styles={togglesStyles}
-                />
-                <TextField
-                    label="Number of left frozen columns"
-                    onGetErrorMessage={validateNumber}
-                    value={frozenColumnCountFromStart}
-                    onChange={onChangeStartCountText}
-                    styles={textFieldStyles}
-                />
-                <TextField
-                    label="Number of right frozen columns"
-                    onGetErrorMessage={validateNumber}
-                    value={frozenColumnCountFromEnd}
-                    onChange={onChangeEndCountText}
-                    styles={textFieldStyles}
-                />
-            </div>
             <MarqueeSelection selection={selection}>
                 <DetailsList
                     setKey="items"
-                    items={items}
+                    items={players}
                     columns={columns}
                     selection={selection}
                     selectionPreservedOnEmptyClick={true}
                     onItemInvoked={onItemInvoked}
                     onRenderItemColumn={onRenderItemColumn}
                     dragDropEvents={getDragDropEvents()}
-                    columnReorderOptions={isColumnReorderEnabled ? getColumnReorderOptions() : undefined}
+                    columnReorderOptions={getColumnReorderOptions()}
                     ariaLabelForSelectionColumn="Toggle selection"
                     ariaLabelForSelectAllCheckbox="Toggle selection for all items"
                     checkButtonAriaLabel="select row"
