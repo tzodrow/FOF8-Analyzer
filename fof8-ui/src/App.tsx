@@ -4,6 +4,7 @@ import { LeftNav } from './LeftNav';
 import { Route, Switch } from 'react-router';
 import { UploadPage } from './Pages/UploadPage';
 import DraftPage from './Pages/DraftPage';
+import { DraftBoardPage } from './Pages/DraftBoardPage';
 
 function App() {
   
@@ -17,6 +18,8 @@ function App() {
           <Route path={"/upload"} render={() => <UploadPage />}>
           </Route>
           <Route path={"/draft"} render={() => (<DraftPage />)}>
+          </Route>
+          <Route path={"/draftBoard"} render={() => <DraftBoardPage />}>
           </Route>
           <Route path={"/"}>
             <div>Welcome!</div>

@@ -26,6 +26,12 @@ const navLinkGroups: INavLinkGroup[] = [
                 name: 'Draft',
                 url: '',
                 onClick: () => history.push('/draft')
+            },
+            {
+                key: 'Draft Board',
+                name: 'Draft Board',
+                url: '',
+                onClick: () => history.push('/draftBoard')
             }
         ],
     }
