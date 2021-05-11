@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router';
 import { UploadPage } from './Pages/UploadPage';
 import DraftPage from './Pages/DraftPage';
 import { DraftBoardPage } from './Pages/DraftBoardPage';
+import { TestPage } from './Pages/TestPage';
 
 function App() {
   
@@ -20,6 +21,8 @@ function App() {
           <Route path={"/draft"} render={() => (<DraftPage />)}>
           </Route>
           <Route path={"/draftBoard"} render={() => <DraftBoardPage />}>
+          </Route>
+          <Route path={"/test"} render={() => <TestPage />}>
           </Route>
           <Route path={"/"}>
             <div>Welcome!</div>
