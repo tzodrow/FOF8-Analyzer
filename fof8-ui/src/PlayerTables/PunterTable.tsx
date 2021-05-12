@@ -103,6 +103,9 @@ export function PunterTable(props: IPunterTableProps) {
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={[]}
+            selectedAttributes={[]}
+            setAttributes={() => console.log("Called")}
         />
     );
 }

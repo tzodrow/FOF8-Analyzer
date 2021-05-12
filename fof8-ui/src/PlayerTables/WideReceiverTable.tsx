@@ -163,6 +163,9 @@ export function WideReceiverTable(props: IWideReceiverTableProps) {
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={[]}
+            selectedAttributes={[]}
+            setAttributes={() => console.log("Called")}
         />
     );
 }

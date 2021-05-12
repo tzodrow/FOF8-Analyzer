@@ -115,6 +115,9 @@ export function KickerTable(props: IKickerTableProps) {
             playerAttributeFilterOptions={playerAttributeFilterOptions}
             onPlayerFilter={filter}
             onClearFiltersClick={onClearFiltersClick}
+            attributes={[]}
+            selectedAttributes={[]}
+            setAttributes={() => console.log("Called")}
         />
     );
 }
