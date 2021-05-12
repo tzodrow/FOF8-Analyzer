@@ -34,7 +34,6 @@ namespace FOF8_Draft_Analyzer
                         log.LogInformation("No player information was found.");
                     }
 
-
                     return new OkObjectResult(recordsList);
                 }
                 catch (Exception ex)

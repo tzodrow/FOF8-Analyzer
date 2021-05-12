@@ -1,8 +1,9 @@
-import { FontIcon, mergeStyles, mergeStyleSets, Stack, StackItem } from '@fluentui/react';
+import { FontIcon, mergeStyles, mergeStyleSets, PrimaryButton, Stack, StackItem } from '@fluentui/react';
 import axios from 'axios';
 import { Dispatch, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { IPlayer } from '../Models/IPlayer';
+import { useAppSelector } from '../Reducers/Hooks';
 import { update } from '../Reducers/Slices/PlayersSlice';
 
 enum FileStatus {
@@ -23,6 +24,18 @@ function onFileUpload(file: File | null | undefined, functionName: string, setSt
             console.error(err);
             setStatus(FileStatus.Fail);
         });
+}
+
+function onSave(players: Array<IPlayer>) {
+    axios
+    .post(`http://localhost:7071/api/SavePlayerData`, players)
+    .then(res => {
+        let result = res.data;
+        console.log(`Data saved: ${result}.`);
+    })
+    .catch(err => {
+        console.error(err);
+    });
 }
 
 const iconClass = mergeStyles({
@@ -76,7 +89,7 @@ export function UploadPage(props: IUploadPageProps) {
     const [rookieStatus, setRookieStatus] = useState(FileStatus.Pending);
     const [draftPersonalStatus, setDraftPersonalStatus] = useState(FileStatus.Pending);
 
-
+    const players = useAppSelector(state => state.players.players);
     const dispatch = useDispatch();
 
     return (
@@ -100,6 +113,9 @@ export function UploadPage(props: IUploadPageProps) {
                 <StatusIcon status={draftPersonalStatus} />
                 <span>Draft Personal: </span>
                 <input type="file" onChange={(e) => onFileUpload(e.target.files?.item(0), "ParseDraftPersonal", setDraftPersonalStatus, dispatch)} />
+            </StackItem>
+            <StackItem>
+                <PrimaryButton text={"Save Data"} onClick={() => onSave(players)} />
             </StackItem>
         </Stack>
     );

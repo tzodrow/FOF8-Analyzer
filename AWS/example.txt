@@ -1,0 +1,2 @@
+AWS Access Key ID: "LocalID"
+AWS Secret Access Key: "LocalPassword"
