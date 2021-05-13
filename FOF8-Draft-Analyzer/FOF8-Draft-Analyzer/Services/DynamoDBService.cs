@@ -170,8 +170,9 @@ namespace FOF8_Draft_Analyzer
                     }
                     await putItem;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex.Message);
                     return false;
                 }
             }

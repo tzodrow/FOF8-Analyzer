@@ -30,31 +30,33 @@ namespace FOF8_Draft_Analyzer
 
             using (var reader = new StreamReader(req.Body))
             {
-                try 
+                try
                 {
-                    var initialRead = await reader.ReadToEndAsync();
-                    log.LogInformation(initialRead);
-                    var playerArray = new JArray(initialRead);
-                    if (DynamoDBService.CreateClient(true)) {
+                    var jsonString = await reader.ReadToEndAsync();
+                    var jarray = JArray.Parse(jsonString);
+
+                    if (DynamoDBService.CreateClient(true))
+                    {
                         var tblExists = await DynamoDBService.CheckingTableExistenceAsync("Players");
-                        if (!tblExists) {
+                        if (!tblExists)
+                        {
                             var tblCreated = await DynamoDBService.CreateTableAsync(
                                 "Players",
-                                new List<AttributeDefinition>{ new AttributeDefinition("PlayerId", ScalarAttributeType.S) },
-                                new List<KeySchemaElement> { new KeySchemaElement("PlayerId", KeyType.HASH) },
+                                new List<AttributeDefinition> { new AttributeDefinition("playerId", ScalarAttributeType.N) },
+                                new List<KeySchemaElement> { new KeySchemaElement("playerId", KeyType.HASH) },
                                 new ProvisionedThroughput(5, 5)
                             );
                         }
 
                         var playerTable = Table.LoadTable(DynamoDBService.Client, "Players");
-                        var playersLoaded = await DynamoDBService.LoadJsonPlayerDataAsync(playerTable, playerArray);
+                        var playersLoaded = await DynamoDBService.LoadJsonPlayerDataAsync(playerTable, jarray);
 
                         return new OkObjectResult(playersLoaded);
                     }
 
                     return new BadRequestObjectResult(false);
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     log.LogError($"Error: {ex.Message}", ex);
                     return new BadRequestObjectResult(ex);
